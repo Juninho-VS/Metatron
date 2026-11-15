@@ -1,355 +1,153 @@
-# METATRON
-AI-powered penetration testing assistant using local LLM on linux (Parrot OS)
-# 🔱 METATRON
-### AI-Powered Penetration Testing Assistant
-
-<p align="center">
-  <img src="screenshots/banner.png" alt="Metatron Banner" width="800"/>
-</p>
+# 🔱 METATRON - Plataforma Autônoma de Auditoria de Segurança para Arch Linux
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python"/>
-  <img src="https://img.shields.io/badge/OS-Parrot%20Linux-green?style=for-the-badge&logo=linux"/>
-  <img src="https://img.shields.io/badge/AI-metatron--qwen-red?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/DB-MariaDB-orange?style=for-the-badge&logo=mariadb"/>
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/SO-Arch%20Linux-1793D1?style=for-the-badge&logo=arch-linux"/>
+  <img src="https://img.shields.io/badge/Package%20Manager-Pacman-yellow?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/DB-SQLite%203-003B57?style=for-the-badge&logo=sqlite"/>
+  <img src="https://img.shields.io/badge/Reporting-1%20Vuln%20%3D%201%20PDF-red?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"/>
 </p>
 
 ---
 
-## 📌 What is Metatron?
+## 📌 Sobre o METATRON
 
-**Metatron** is a CLI-based AI penetration testing assistant that runs entirely on your local machine — no cloud, no API keys, no subscriptions.
+O **METATRON** é uma plataforma autônoma de auditoria de segurança cibernética projetada para operar nativamente em **Arch Linux**. 
 
-You give it a target IP or domain. It runs real recon tools (nmap, whois, whatweb, curl, dig, nikto), feeds all results to a locally running AI model, and the AI analyzes the target, identifies vulnerabilities, suggests exploits, and recommends fixes. Everything gets saved to a MariaDB database with full scan history.
-
----
-
-## ✨ Features
-
-- 🤖 **Local AI Analysis** — powered by `metatron-qwen` via Ollama, runs 100% offline
-- 🔍 **Automated Recon** — nmap, whois, whatweb, curl headers, dig DNS, nikto
-- 🌐 **Web Search** — DuckDuckGo search + CVE lookup (no API key needed)
-- 🗄️ **MariaDB Backend** — full scan history with 5 linked tables
-- ✏️ **Edit / Delete** — modify any saved result directly from the CLI
-- 🔁 **Agentic Loop** — AI can request more tool runs mid-analysis
-- 🚫 **No API Keys** — everything is free and local
--📤 Export Reports
-
-Metatron allows you to export scan results into clean, shareable report formats by selecting '2.view history'->select slno and export
-
-📄 PDF — professional vulnerability reports
-🌐 HTML — browser-viewable reports
----
-
-## 🖥️ Screenshots
-
-<p align="center">
-  <img src="screenshots/main_menu.png" alt="Main Menu" width="700"/>
-  <br><i>Main Menu</i>
-</p>
-
-<p align="center">
-  <img src="screenshots/scan_running.png" alt="Scan Running" width="700"/>
-  <br><i>Recon tools running on target</i>
-</p>
-
-<p align="center">
-  <img src="screenshots/ai_analysis.png" alt="AI Analysis" width="700"/>
-  <br><i>metatron-qwen analyzing scan results</i>
-</p>
-
-<p align="center">
-  <img src="screenshots/results.png" alt="Results" width="700"/>
-  <br><i>Vulnerabilities saved to database</i>
-</p>
-<p align="center"> <img src="screenshots/export_menu.png" alt="Export Menu" width="700"/> <br><i>Export scan results as PDF and or HTML</i> </p>
----
-
-## 🧱 Tech Stack
-
-| Component  | Technology                          |
-|------------|-------------------------------------|
-| Language   | Python 3                            |
-| AI Model   | metatron-qwen (fine-tuned Qwen 3.5) |
-| Base Model | huihui_ai/qwen3.5-abliterated:9b    |
-| LLM Runner | Ollama                              |
-| Database   | MariaDB                             |
-| OS         | Parrot OS (Debian-based)            |
-| Search     | DuckDuckGo (free, no key)           |
+Diferente de scanners convencionais ou assistentes que apenas geram hipóteses superficiais, o METATRON opera sob uma política rigorosa de **validação ativa e comprovação de evidências**. Nenhuma vulnerabilidade é registrada sem prova reproduzível e evidência técnica íntegra com checksum SHA-256.
 
 ---
 
-## ⚙️ Installation
+## 🚀 Principais Capacidades
 
-### 1. Clone the repository
+- 🗄️ **Persistência Local Completa em SQLite (`metatron.db`)**:
+  - Memória de execução e contexto operacional
+  - Resultados detalhados de varreduras e enumeração
+  - Evidências brutas associadas a hashes criptográficos SHA-256
+  - Vulnerabilidades validadas com métricas e pontuação CVSS v3.1
+  - Catálogo de ferramentas do sistema e capacidades mapeadas
+  - Histórico de instalações dinâmicas de ferramentas via pacman
+  - Trilha cronológica de auditoria de ações executadas
+  - Cache offline para reutilização de inteligência
 
+- 📦 **Gerenciamento Inteligente de Ferramentas no Arch Linux**:
+  - Verifica sempre se a ferramenta necessária já está instalada
+  - Prioriza ferramentas pré-existentes no ambiente
+  - Evita instalação redundante de ferramentas com capacidades já cobertas
+  - Instalação sob demanda executada **exclusivamente via `pacman`**
+  - **Não utiliza `yay`, `paru` ou outros AUR helpers**
+  - Registro de toda instalação realizada no banco SQLite
+
+- 🌐 **Operação Offline-First**:
+  - Priorização de recursos locais e motores de análise nativos
+  - Uso de rede externa apenas quando estritamente necessário para alcançar o alvo
+  - Cache local persistido para consultas recorrentes
+
+- 📄 **Relatórios Técnicos Individuais em PDF (1 Vulnerabilidade = 1 PDF)**:
+  - Cada vulnerabilidade validada gera um arquivo PDF independente (`reports/METATRON_VULN_<id>_<slug>.pdf`)
+  - Estrutura completa de reporte profissional:
+    1. Título e cabeçalho executivo com carimbo de integridade
+    2. Severidade qualitativa e badge visual padronizado
+    3. Pontuação CVSS v3.1 oficial e decomposição métrica completa
+    4. Descrição técnica e superfície de ataque analisada
+    5. Passos exatos para reprodução independente
+    6. Análise de impacto técnico e de negócio
+    7. Evidências técnicas coletadas (PoC bruto com hash SHA-256)
+    8. Correção recomendada detalhada e orientações de remediação
+    9. Ferramentas utilizadas e trilha de auditoria
+
+---
+
+## 🔄 Processo de Auditoria em 7 Fases
+
+```mermaid
+flowchart TD
+    F1["1. Reconhecimento<br/>(DNS, TLS, Resolução, Cache Local)"] --> F2["2. Enumeração<br/>(Portas, Banners, Endpoints Web)"]
+    F2 --> F3["3. Descoberta de Superfícies de Ataque<br/>(Mapeamento de Vetores Candidatos)"]
+    F3 --> F4["4. Validação de Vulnerabilidades<br/>(Sondas Ativas, Eliminação de Falsos Positivos)"]
+    F4 --> F5["5. Coleta de Evidências<br/>(Hashes SHA-256, Logs Brutos, Prova Técnica)"]
+    F5 --> F6["6. Classificação de Severidade<br/>(Cálculo Numérico e Vetor CVSS v3.1)"]
+    F6 --> F7["7. Geração de Relatórios<br/>(1 Vulnerabilidade = 1 PDF Independente)"]
+```
+
+### Critérios Estritos de Vulnerabilidade:
+- **Não registrar hipóteses sem evidência.**
+- **Não registrar potenciais vulnerabilidades sem validação.**
+- **Priorizar achados estritamente reproduzíveis.**
+- **Arquivar logs e evidências de suporte com integridade SHA-256.**
+
+---
+
+## 🛠️ Arquitetura do Sistema
+
+| Módulo | Função |
+|---|---|
+| `metatron.py` | Ponto de entrada CLI interativo e painel de controle operacional |
+| `audit_engine.py` | Motor de orquestração do ciclo de vida das 7 fases de auditoria |
+| `db.py` | Camada de persistência local em SQLite com suporte WAL e 9 tabelas relacionais |
+| `tool_manager.py` | Gerenciador de dependências Arch Linux via pacman nativo |
+| `cvss.py` | Calculador oficial da especificação FIRST CVSS v3.1 (Base Score & Vector) |
+| `export.py` | Gerador profissional de relatórios individuais em PDF com ReportLab |
+
+---
+
+## 📦 Instalação e Execução no Arch Linux
+
+### 1. Clonar o repositório
 ```bash
 git clone https://github.com/sooryathejas/METATRON.git
 cd METATRON
 ```
 
-### 2. Create and activate virtual environment
-
+### 2. Pacotes necessários no Arch Linux
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+sudo pacman -S --needed python python-reportlab curl bind openssl iproute2 iputils sqlite
 ```
 
-### 3. Install Python dependencies
-
+### 3. Iniciar o METATRON
 ```bash
-pip install -r requirements.txt
-```
-
-### 4. Install system tools
-
-```bash
-sudo apt install nmap whois whatweb curl dnsutils nikto
-```
-
----
-
-## 🤖 AI Model Setup
-
-### Step 1 — Install Ollama
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-### Step 2 — Download the base model
-
-```bash
-ollama pull huihui_ai/qwen3.5-abliterated:9b
-```
-
-> ⚠️ This model requires at least 8.4 GB of RAM. If your system has less, use the 4b variant:
-> ```bash
-> ollama pull huihui_ai/qwen3.5-abliterated:4b
-> ```
-> Then edit `Modelfile` and change the FROM line to the 4b model.
-
-### Step 3 — Build the custom metatron-qwen model
-
-The repo includes a `Modelfile` that fine-tunes the base model with pentest-specific parameters:
-
-```bash
-ollama create metatron-qwen -f Modelfile
-```
-
-This creates your local `metatron-qwen` model with:
-- 16,384 token context window
-- Temperature: 0.7
-- Top-k: 10
-- Top-p: 0.9
-
-### Step 4 — Verify the model exists
-
-```bash
-ollama list
-```
-
-You should see `metatron-qwen` in the list.
-
----
-
-## 🗄️ Database Setup
-
-### Step 1 — Make sure MariaDB is running
-
-```bash
-sudo systemctl start mariadb
-sudo systemctl enable mariadb
-```
-
-### Step 2 — Create the database and user
-
-```bash
-mysql -u root
-```
-
-```sql
-CREATE DATABASE metatron;
-CREATE USER 'metatron'@'localhost' IDENTIFIED BY '123';
-GRANT ALL PRIVILEGES ON metatron.* TO 'metatron'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-```
-
-### Step 3 — Create the tables
-
-```bash
-mysql -u metatron -p123 metatron
-```
-
-```sql
-CREATE TABLE history (
-  sl_no     INT AUTO_INCREMENT PRIMARY KEY,
-  target    VARCHAR(255) NOT NULL,
-                      scan_date DATETIME NOT NULL,
-                      status    VARCHAR(50) DEFAULT 'active'
-);
-
-CREATE TABLE vulnerabilities (
-  id          INT AUTO_INCREMENT PRIMARY KEY,
-  sl_no       INT,
-  vuln_name   TEXT,
-  severity    VARCHAR(50),
-                              port        VARCHAR(20),
-                              service     VARCHAR(100),
-                              description TEXT,
-                              FOREIGN KEY (sl_no) REFERENCES history(sl_no)
-);
-
-CREATE TABLE fixes (
-  id       INT AUTO_INCREMENT PRIMARY KEY,
-  sl_no    INT,
-  vuln_id  INT,
-  fix_text TEXT,
-  source   VARCHAR(50),
-                    FOREIGN KEY (sl_no) REFERENCES history(sl_no),
-                    FOREIGN KEY (vuln_id) REFERENCES vulnerabilities(id)
-);
-
-CREATE TABLE exploits_attempted (
-  id           INT AUTO_INCREMENT PRIMARY KEY,
-  sl_no        INT,
-  exploit_name TEXT,
-  tool_used    TEXT,
-  payload      LONGTEXT,
-  result       TEXT,
-  notes        TEXT,
-  FOREIGN KEY (sl_no) REFERENCES history(sl_no)
-);
-
-CREATE TABLE summary (
-  id           INT AUTO_INCREMENT PRIMARY KEY,
-  sl_no        INT,
-  raw_scan     LONGTEXT,
-  ai_analysis  LONGTEXT,
-  risk_level   VARCHAR(50),
-                      generated_at DATETIME,
-                      FOREIGN KEY (sl_no) REFERENCES history(sl_no)
-);
-```
-
----
-
-## 🚀 Usage
-
-Metatron needs **two terminal tabs** to run.
-
-### Terminal 1 — Load the AI model
-
-```bash
-ollama run metatron-qwen
-```
-
-Wait until you see the `>>>` prompt. This means the model is loaded into memory and ready. You can leave this terminal running in the background.
-
-### Terminal 2 — Launch Metatron
-
-```bash
-cd ~/METATRON
-source venv/bin/activate
 python metatron.py
 ```
 
 ---
 
-### Walkthrough
+## 💻 Exemplo de Execução e Saída
 
-**1. Main menu appears:**
-```
-  [1]  New Scan
-  [2]  View History
-  [3]  Exit
-```
+Ao auditar um alvo, cada vulnerabilidade com evidência validada gera um arquivo PDF independente no diretório `reports/`:
 
-**2. Select [1] New Scan → enter your target:**
-```
-[?] Enter target IP or domain: 192.168.1.1
-```
-or
-```
-[?] Enter target IP or domain: example.com
-```
+```text
+=================================================================
+🔱 METATRON :: AUDITORIA AUTÔNOMA DE SEGURANÇA NO ARCH LINUX
+Alvo: http://127.0.0.1:8888 | Sessão SQLite: #3
+=================================================================
 
-**3. Select recon tools to run:**
-```
-  [1] nmap
-  [2] whois
-  [3] whatweb
-  [4] curl headers
-  [5] dig DNS
-  [6] nikto
-  [a] Run all (except nikto)
-  [n] Run all + nikto (slow)
-```
+[15:05:42] [RECONHECIMENTO] Iniciando reconhecimento do alvo: 127.0.0.1
+[15:05:43] [ENUMERAÇÃO] Porta ABERTA encontrada: 8888 (HTTP-Alt)
+[15:05:43] [SUPERFÍCIE DE ATAQUE] Total de superfícies identificadas para validação: 3
+[15:05:43] [VALIDAÇÃO DE VULNS] VALIDADO: Ausência de proteção contra Clickjacking comprovada.
+[15:05:43] [VALIDAÇÃO DE VULNS] VALIDADO: Ausência de X-Content-Type-Options comprovada.
+[15:05:43] [VALIDAÇÃO DE VULNS] VALIDADO: Divulgação de versão confirmada: Server: BaseHTTP/0.6 Python/3.14.10
+[15:05:43] [VALIDAÇÃO DE VULNS] VALIDADO: Método HTTP TRACE ativo confirmado com código 200.
+[15:05:43] [VALIDAÇÃO DE VULNS] VALIDADO: Repositório Git (.git/HEAD) exposto publicamente!
+[15:05:43] [COLETA DE EVIDÊNCIAS] Evidência arquivada (ID #1-#5)
+[15:05:43] [CLASSIFICAÇÃO CVSS] Scores CVSS v3.1 calculados e persistidos no SQLite.
+[15:05:44] [GERAÇÃO DE PDFS] Sucesso: 5 relatório(s) PDF independente(s) gerado(s) em 'reports/':
+   📄 reports/METATRON_VULN_001_vulnerabilidade_de_clickjacking_devido___aus_ncia.pdf
+   📄 reports/METATRON_VULN_002_aus_ncia_do_cabe_alho_de_prote__o_mime_sniffing__x.pdf
+   📄 reports/METATRON_VULN_003_vazamento_de_informa__es_de_vers_o_do_servidor__se.pdf
+   📄 reports/METATRON_VULN_004_m_todo_http_trace_habilitado__cross-site_tracing_-.pdf
+   📄 reports/METATRON_VULN_005_exposi__o_cr_tica_de_reposit_rio_git_p_blico____gi.pdf
 
-**4. Metatron runs the tools, feeds results to the AI, and prints the analysis.**
-
-**5. Everything is saved to MariaDB automatically.**
-
-**6. After the scan you can edit or delete any result.**
-
----
-
-## 📁 Project Structure
-
-```
-METATRON/
-├── metatron.py       ← main CLI entry point
-├── db.py             ← MariaDB connection and all CRUD operations
-├── tools.py          ← recon tool runners (nmap, whois, etc.)
-├── llm.py            ← Ollama interface and AI tool dispatch loop
-├── search.py         ← DuckDuckGo web search and CVE lookup
-├── Modelfile         ← custom model config for metatron-qwen
-├── requirements.txt  ← Python dependencies
-├── .gitignore        ← excludes venv, pycache, db files
-├── LICENSE           ← MIT License
-├── README.md         ← this file
-└── screenshots/      ← terminal screenshots for documentation
+=================================================================
+[+] AUDITORIA CONCLUÍDA
+Total de vulnerabilidades validadas : 5
+Total de PDFs independentes gerados : 5
+=================================================================
 ```
 
 ---
 
-## 🗃️ Database Schema
+## ⚖️ Licença e Responsabilidade
 
-All 5 tables are linked by `sl_no` (session number) from the `history` table:
-
-```
-history              ← one row per scan session (sl_no is the spine)
-    │
-    ├── vulnerabilities   ← vulns found, linked by sl_no
-    │       │
-    │       └── fixes     ← fixes per vuln, linked by vuln_id + sl_no
-    │
-    ├── exploits_attempted ← exploits tried, linked by sl_no
-    │
-    └── summary           ← full AI analysis dump, linked by sl_no
-```
-
----
-
-## ⚠️ Disclaimer
-
-This tool is intended for **educational purposes and authorized penetration testing only**.
-
-- Only use Metatron on systems you own or have **explicit written permission** to test.
-- Unauthorized scanning or exploitation of systems is **illegal**.
-- The author is not responsible for any misuse of this tool.
-
----
-
-## 👤 Author
-
-**Soorya Thejas**
-- GitHub: [@sooryathejas](https://github.com/sooryathejas)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+Este software foi desenvolvido para fins exclusivos de auditoria autorizada, testes de segurança defensiva e avaliação de conformidade técnica. O operador é inteiramente responsável pelo uso de acordo com a legislação vigente.

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 METATRON - search.py
-Free web search via DuckDuckGo — no API key needed.
-Also fetches and extracts plain text from URLs.
-Used by LLM tool dispatch when AI writes [SEARCH: query]
+Busca web gratuita via DuckDuckGo — sem chave de API necessária.
+Também busca e extrai texto simples de URLs.
+Usado pelo dispatch de ferramentas da LLM quando a IA escreve [SEARCH: query]
 """
 
 import requests
@@ -17,29 +17,29 @@ from ddgs import DDGS   # pip install duckduckgo-search
 
 def web_search(query: str, max_results: int = 5) -> str:
     """
-    Search DuckDuckGo and return formatted results.
-    No API key. No rate limit issues for reasonable usage.
-    Returns a string ready to paste into LLM prompt.
+    Pesquisa DuckDuckGo e retorna resultados formatados.
+    Sem chave de API. Sem problemas de limite de taxa para uso razoável.
+    Retorna uma string pronta para colar no prompt da LLM.
     """
-    print(f"  [*] Searching: {query}")
+    print(f"  [*] Pesquisando: {query}")
     try:
         with DDGS() as ddgs:
             results = list(ddgs.text(query, max_results=max_results))
 
         if not results:
-            return "[!] No search results found."
+            return "[!] Nenhum resultado de busca encontrado."
 
-        output = f"[WEB SEARCH RESULTS FOR: {query}]\n"
+        output = f"[RESULTADOS DE BUSCA WEB PARA: {query}]\n"
         output += "─" * 50 + "\n"
         for i, r in enumerate(results, 1):
             output += f"\n[{i}] {r['title']}\n"
             output += f"    URL     : {r['href']}\n"
-            output += f"    Snippet : {r['body']}\n"
+            output += f"    Trecho : {r['body']}\n"
 
         return output
 
     except Exception as e:
-        return f"[!] Search failed: {e}"
+        return f"[!] Busca falhou: {e}"
 
 
 # ─────────────────────────────────────────────
@@ -48,8 +48,8 @@ def web_search(query: str, max_results: int = 5) -> str:
 
 def search_cve(cve_id: str) -> str:
     """
-    Search for a specific CVE.
-    Queries DDG then also hits cve.mitre.org directly.
+    Pesquisa por um CVE específico.
+    Consulta DDG e depois acessa cve.mitre.org diretamente.
     """
     print(f"  [*] Looking up {cve_id}...")
 
@@ -60,13 +60,13 @@ def search_cve(cve_id: str) -> str:
     mitre_url = f"https://cve.mitre.org/cgi-bin/cvename.cgi?name={cve_id}"
     mitre_data = fetch_page(mitre_url, max_chars=2000)
 
-    return f"{ddg_results}\n\n[MITRE CVE LOOKUP: {cve_id}]\n{mitre_data}"
+    return f"{ddg_results}\n\n[BUSCA CVE MITRE: {cve_id}]\n{mitre_data}"
 
 
 def search_exploit(service: str, version: str) -> str:
     """
-    Search for known exploits for a service + version combo.
-    e.g. search_exploit("apache", "2.4.49")
+    Pesquisa por exploits conhecidos para uma combinação de serviço + versão.
+    ex: search_exploit("apache", "2.4.49")
     """
     query = f"{service} {version} exploit CVE vulnerability 2023 2024"
     return web_search(query, max_results=5)
@@ -74,7 +74,7 @@ def search_exploit(service: str, version: str) -> str:
 
 def search_fix(vuln_name: str) -> str:
     """
-    Search for mitigation/fix for a vulnerability.
+    Pesquisa por mitigação/correção de uma vulnerabilidade.
     """
     query = f"how to fix {vuln_name} security mitigation patch"
     return web_search(query, max_results=3)
@@ -86,8 +86,8 @@ def search_fix(vuln_name: str) -> str:
 
 def fetch_page(url: str, max_chars: int = 3000) -> str:
     """
-    Fetch a URL and return extracted plain text.
-    Strips all HTML tags. Truncated to max_chars for LLM context.
+    Busca uma URL e retorna texto simples extraído.
+    Remove todas as tags HTML. Truncado para max_chars para contexto de LLM.
     """
     try:
         headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Gecko/20100101 Firefox/120.0"}

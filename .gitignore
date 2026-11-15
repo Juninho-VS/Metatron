@@ -1,6 +1,7 @@
 reports/
 exports/
 venv/
+metatron.db*
 __pycache__/
 *.pyc# Byte-compiled / optimized / DLL files
 __pycache__/
@@ -212,5 +213,6 @@ __marimo__/
 reports/
 exports/
 venv/
+metatron.db*
 __pycache__/
 *.pyc
